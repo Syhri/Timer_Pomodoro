@@ -1,17 +1,22 @@
-const timerLabel = document.getElementById('timerLabel');
-const startPauseBtn = document.getElementById('startPauseBtn');
-const resetBtn = document.getElementById('resetBtn');
+const [timerLabel, startPauseBtn, resetBtn] = 
+    ['timerLabel', 'startPauseBtn', 'resetBtn']
+        .map(id => document.getElementById(id));
 
-let timeLeft = 1500; // 25 minutes in seconds
+let timeLeft   = 1500; // 25 minutes
 let intervalId = null;
-const breakTime = 300; // 5 minutes in seconds
-let isBreak = false;
-let isRunning = false;
+const breakTime = 300; // 5 minutes
+let isBreak    = false;
+let isRunning  = false;
 
-function updateTimer() {
-    const minutes = Math.floor(timeLeft / 60);
-    const seconds = timeLeft % 60;
-    timerLabel.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+const updateTimer = () => {
+    const minutes = Math.floor(timeLeft / 60)
+        .toString()
+        .padStart(2, '0');
+    const seconds = (timeLeft % 60)
+        .toString()
+        .padStart(2, '0');
+
+    timerLabel.textContent = `${minutes}:${seconds}`;
 
     if (timeLeft > 0) {
         timeLeft--;
@@ -19,49 +24,44 @@ function updateTimer() {
         clearInterval(intervalId);
         if (!isBreak) {
             // Switch to break
-            timeLeft = breakTime;
-            isBreak = true;
+            timeLeft   = breakTime;
+            isBreak    = true;
             startPauseBtn.textContent = 'Pause';
             startTimer();
         } else {
             // End cycle
-            isBreak = false;
-            isRunning = false;
-            timeLeft = 1500;
+            isBreak    = false;
+            isRunning  = false;
+            timeLeft   = 1500;
             startPauseBtn.textContent = 'Start';
         }
     }
-}
+};
 
-function startTimer() {
+const startTimer = () => {
     if (!isRunning) {
         intervalId = setInterval(updateTimer, 1000);
-        isRunning = true;
+        isRunning  = true;
         startPauseBtn.textContent = 'Pause';
     }
-}
+};
 
-function pauseTimer() {
+const pauseTimer = () => {
     clearInterval(intervalId);
     isRunning = false;
     startPauseBtn.textContent = 'Start';
-}
+};
 
-function resetTimer() {
+const resetTimer = () => {
     clearInterval(intervalId);
-    isRunning = false;
-    isBreak = false;
-    timeLeft = 1500;
-    timerLabel.textContent = '25:00';
+    isRunning  = false;
+    isBreak    = false;
+    timeLeft   = 1500;
+    timerLabel.textContent    = '25:00';
     startPauseBtn.textContent = 'Start';
-}
+};
 
-startPauseBtn.addEventListener('click', () => {
-    if (isRunning) {
-        pauseTimer();
-    } else {
-        startTimer();
-    }
-});
-
+startPauseBtn.addEventListener('click', () =>
+    isRunning ? pauseTimer() : startTimer()
+);
 resetBtn.addEventListener('click', resetTimer);
