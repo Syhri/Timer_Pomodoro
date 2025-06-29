@@ -9,9 +9,24 @@
 </head>
 
 <body>
-    <h1>Timer Pomodoro</h1>
+    <h1>Pomodoro Timer</h1>
     <br>
     <div class="timer">
+        <div class="time-settings">
+            <label for="focusMinutes">Focus Time:</label>
+            <input type="number" id="focusMinutes" value="25" min="1">
+            <span>minutes</span>
+            <input type="number" id="focusSeconds" value="0" min="0" max="59">
+            <span>seconds</span>
+        </div>
+        <div class="time-settings">
+            <label for="breakMinutes">Break Time:</label>
+            <input type="number" id="breakMinutes" value="5" min="1">
+            <span>minutes</span>
+            <input type="number" id="breakSeconds" value="0" min="0" max="59">
+            <span>seconds</span>
+        </div>
+        <br>
         <h1 id="timerLabel">25:00</h1>
         <button id="startPauseBtn">Start</button>
         <button id="resetBtn">Reset</button>
